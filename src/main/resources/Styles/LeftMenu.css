@@ -3,6 +3,11 @@
     -fx-alignment:center;
 }
 
+.active{
+    -fx-background-color:#241560;
+    -fx-text-fill:red;
+}
+
 .left-container{
     -fx-background-color:#FFFFFF;
     -fx-background-radius:10;

@@ -13,6 +13,7 @@ public class ViewFactory {
     private final StringProperty selectedMenuItem;
     // DASHBOARD VIEW
     private AnchorPane dashboardView;
+    private AnchorPane navbarView;
     // VIEW VENDORS VIEW
     private AnchorPane viewVendorsView;
     // ADD GOODS

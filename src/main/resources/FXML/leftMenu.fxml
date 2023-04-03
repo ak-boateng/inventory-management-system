@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="180.0" styleClass="main-menu-container" stylesheets="@../Styles/LeftMenu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.netmart.Controllers.LeftMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="180.0" stylesheets="@../Styles/LeftMenu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.netmart.Controllers.LeftMenuController">
    <AnchorPane prefHeight="750.0" prefWidth="181.0" styleClass="left-container">
       <VBox layoutY="-10.0" prefHeight="101.0" prefWidth="180.0" styleClass="title-container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
          <FontAwesomeIconView glyphName="HOME" size="30" />
@@ -20,44 +20,44 @@
          </Text>
       </VBox>
       <VBox prefHeight="400.0" prefWidth="160.0" styleClass="menu-container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-         <Button fx:id="dashboard_btn" mnemonicParsing="false" text="DASHBOARD">
+         <Button fx:id="dashboard_btn" mnemonicParsing="false" prefHeight="28.0" prefWidth="180.0" text="DASHBOARD">
             <graphic>
                <FontAwesomeIconView glyphName="HOME" size="20" />
             </graphic>
          </Button>
-         <Button fx:id="view_vendor_btn" mnemonicParsing="false" text="VIEW VENDORS">
+         <Button fx:id="view_vendor_btn" mnemonicParsing="false" prefWidth="180.0" text="VIEW VENDORS">
             <graphic>
                <FontAwesomeIconView glyphName="LIST" />
             </graphic></Button>
-         <Button fx:id="add_goods_btn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="ADD GOODS">
+         <Button fx:id="add_goods_btn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="180.0" text="ADD GOODS">
             <graphic>
                <FontAwesomeIconView glyphName="PLUS" size="20" />
             </graphic>
          </Button>
-         <Button fx:id="view_goods_btn" layoutX="10.0" layoutY="34.0" mnemonicParsing="false" text="VIEW GOODS">
+         <Button fx:id="view_goods_btn" layoutX="10.0" layoutY="34.0" mnemonicParsing="false" prefWidth="180.0" text="VIEW GOODS">
             <graphic>
                <FontAwesomeIconView glyphName="GRAPH" size="20" text="" />
             </graphic>
          </Button>
-         <Button fx:id="view_bills_btn" layoutX="10.0" layoutY="58.0" mnemonicParsing="false" text="VIEW BILLS">
+         <Button fx:id="view_bills_btn" layoutX="10.0" layoutY="58.0" mnemonicParsing="false" prefWidth="180.0" text="VIEW BILLS">
             <graphic>
                <FontAwesomeIconView glyphName="LIST" size="20" />
             </graphic>
          </Button>
-         <Button fx:id="issued_goods_btn" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" text="ISSUED GOODS" textOverrun="CLIP">
+         <Button fx:id="issued_goods_btn" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" prefWidth="180.0" text="ISSUED GOODS" textOverrun="CLIP">
             <graphic>
                <FontAwesomeIconView glyphName="LIST" size="20" text="" />
             </graphic>
          </Button>
-         <Button fx:id="view_issued_goods_btn" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" text="VIEW ISSUED GOODS">
+         <Button fx:id="view_issued_goods_btn" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" prefWidth="180.0" text="VIEW ISSUED GOODS">
             <graphic>
                <FontAwesomeIconView size="20" />
             </graphic>
          </Button>
          <Line endX="150.0" />
-         <Button fx:id="logout_btn" mnemonicParsing="false" styleClass="alt-menu-btn" text="LOG OUT">
+         <Button fx:id="logout_btn" mnemonicParsing="false" prefWidth="180.0" styleClass="alt-menu-btn" text="LOG OUT">
             <graphic>
-               <FontAwesomeIconView glyphName="EXTERNAL_LINK" size="20" />
+               <FontAwesomeIconView glyphName="EXTERNAL_LINK" size="15" />
             </graphic>
          </Button>
       </VBox>

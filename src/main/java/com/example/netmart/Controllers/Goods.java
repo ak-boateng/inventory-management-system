@@ -1,15 +1,15 @@
 package com.example.netmart.Controllers;
 
 public class Goods {
-    Integer good_id;
+    String good_id;
     String good_name;
-    Integer quantity;
-    Integer buying_price;
-    Integer selling_price;
-    Integer gross_price;
+    String quantity;
+    String buying_price;
+    String selling_price;
+    String gross_price;
     String date;
 
-    public Goods(Integer good_id, String good_name, Integer quantity, Integer buying_price, Integer selling_price, Integer gross_price, String date) {
+    public Goods(String good_id, String good_name, String quantity, String buying_price, String selling_price, String gross_price, String date) {
         this.good_id = good_id;
         this.good_name = good_name;
         this.quantity = quantity;
@@ -20,7 +20,7 @@ public class Goods {
     }
 
 
-    public Integer getGood_id() {
+    public String getGood_id() {
         return good_id;
     }
 
@@ -28,19 +28,19 @@ public class Goods {
         return good_name;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public Integer getBuying_price() {
+    public String getBuying_price() {
         return buying_price;
     }
 
-    public Integer getSelling_price() {
+    public String getSelling_price() {
         return selling_price;
     }
 
-    public Integer getGross_price() {
+    public String getGross_price() {
         return gross_price;
     }
 
@@ -49,7 +49,7 @@ public class Goods {
     }
 
 
-    public void setGood_id(Integer good_id) {
+    public void setGood_id(String good_id) {
         this.good_id = good_id;
     }
 
@@ -57,19 +57,19 @@ public class Goods {
         this.good_name = good_name;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public void setBuying_price(Integer buying_price) {
+    public void setBuying_price(String buying_price) {
         this.buying_price = buying_price;
     }
 
-    public void setSelling_price(Integer selling_price) {
+    public void setSelling_price(String selling_price) {
         this.selling_price = selling_price;
     }
 
-    public void setGross_price(Integer gross_price) {
+    public void setGross_price(String gross_price) {
         this.gross_price = gross_price;
     }
 

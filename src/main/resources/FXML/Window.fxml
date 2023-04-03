@@ -7,7 +7,9 @@
 <left>
     <fx:include source="leftMenu.fxml"/>
 </left>
-
+<!--<top>-->
+<!--    <fx:include source="Navbar.fxml"/>-->
+<!--</top>-->
 <center>
     <fx:include source="Dashboard.fxml"/>
 </center>

@@ -4,10 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,8 @@ import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 public class ViewGoodsController implements Initializable {
+    public ChoiceBox<String> category;
+    public Button remove_btn;
     @FXML
     private TableView<Goods> view_goods_table;
     @FXML
@@ -39,6 +42,8 @@ public class ViewGoodsController implements Initializable {
     @FXML
     private TableColumn<Goods, Integer> good_selling_price;
 
+    private static final String[] categories = {"Beverages", "Bakery", "Canned", "Dairy", "Dry",
+            "Frozen Foods", "Meat", "Produce", "Cleaner", "Paper Goods", "Personal Care"};
 
     ObservableList<Goods> listGoods;
     int index = -1;
@@ -46,6 +51,11 @@ public class ViewGoodsController implements Initializable {
     ResultSet rs = null;
     PreparedStatement ps = null;
 
+    // STACKS INSTANCE
+    private StackDB beverages = new StackDB( "beverages");
+    private StackDB bakery = new StackDB( "bakery");
+    private StackDB canned = new StackDB( "canned");
+    private StackDB dairy = new StackDB( "dairy");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,26 +66,52 @@ public class ViewGoodsController implements Initializable {
         good_selling_price.setCellValueFactory(new PropertyValueFactory<>("selling_price"));
         good_gross_price.setCellValueFactory(new PropertyValueFactory<>("gross_price"));
         good_date.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        listGoods = getData();
+        category.getItems().addAll(categories);
+        listGoods = getData("beverages");
         view_goods_table.setItems(listGoods);
+
+        category.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                listGoods = getData(newValue.toLowerCase());
+                view_goods_table.setItems(listGoods);
+            }
+        });
+
+        remove_btn.setOnAction(event -> {
+            String cat = category.getValue();
+            String _cat = cat.toLowerCase().split("/")[0].split(" ")[0];
+            switch (_cat){
+                case "beverages":
+                    beverages.pop(_cat);
+                case "bakery":
+                    bakery.pop(_cat);
+                case "canned":
+                    canned.pop(_cat);
+                case "dairy":
+                    dairy.pop(_cat);
+            }
+            StackDB remove = new StackDB(category.getValue());
+            remove.pop(category.getValue());
+        });
     }
 
-    public static ObservableList<Goods> getData(){
+    public  ObservableList<Goods> getData(String category){
         ObservableList<Goods> goods = FXCollections.observableArrayList();
         try{
             Connection connection = DatabaseConnection.getConnection();
-            String query = String.format("SELECT * FROM beverages");
+
+
+            String query = String.format("SELECT * FROM %s", category);
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs =  ps.executeQuery();
 
             while (rs.next()){
-                goods.add(new Goods(Integer.parseInt(rs.getString("id")),
+                goods.add(new Goods(rs.getString("id"),
                         rs.getString("good_name"),
-                        Integer.parseInt(rs.getString("quantity")),
-                        Integer.parseInt(rs.getString("buying_price")),
-                        Integer.parseInt(rs.getString("selling_price")),
-                        Integer.parseInt(rs.getString("gross_price")),
+                        rs.getString("quantity"),
+                        rs.getString("buying_price"),
+                        rs.getString("selling_price"),
+                        rs.getString("gross_price"),
                         rs.getString("date")
                 ));
             }
