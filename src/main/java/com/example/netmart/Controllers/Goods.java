@@ -1,15 +1,15 @@
 package com.example.netmart.Controllers;
 
 public class Goods {
-    String good_id;
-    String good_name;
-    String quantity;
-    String buying_price;
-    String selling_price;
-    String gross_price;
-    String date;
+    private int good_id;
+    private String good_name;
+    private int quantity;
+    private double buying_price;
+    private double selling_price;
+    private double gross_price;
+    private String date;
 
-    public Goods(String good_id, String good_name, String quantity, String buying_price, String selling_price, String gross_price, String date) {
+    public Goods(int good_id, String good_name, int quantity, double buying_price, double selling_price, double gross_price, String date) {
         this.good_id = good_id;
         this.good_name = good_name;
         this.quantity = quantity;
@@ -19,8 +19,7 @@ public class Goods {
         this.date = date;
     }
 
-
-    public String getGood_id() {
+    public Integer getGood_id() {
         return good_id;
     }
 
@@ -28,19 +27,19 @@ public class Goods {
         return good_name;
     }
 
-    public String getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public String getBuying_price() {
+    public Double getBuying_price() {
         return buying_price;
     }
 
-    public String getSelling_price() {
+    public Double getSelling_price() {
         return selling_price;
     }
 
-    public String getGross_price() {
+    public Double getGross_price() {
         return gross_price;
     }
 
@@ -49,7 +48,7 @@ public class Goods {
     }
 
 
-    public void setGood_id(String good_id) {
+    public void setGood_id(Integer good_id) {
         this.good_id = good_id;
     }
 
@@ -57,23 +56,39 @@ public class Goods {
         this.good_name = good_name;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public void setBuying_price(String buying_price) {
+    public void setBuying_price(Double buying_price) {
         this.buying_price = buying_price;
     }
 
-    public void setSelling_price(String selling_price) {
+    public void setSelling_price(Double selling_price) {
         this.selling_price = selling_price;
     }
 
-    public void setGross_price(String gross_price) {
+    public void setGross_price(Double gross_price) {
         this.gross_price = gross_price;
     }
 
     public void setDate_price(String date) {
         this.date = date;
+    }
+
+    public String sqlStr() {
+        return "good_name = '" + good_name + "', quantity = " + quantity + ", buying_price = "
+                + buying_price
+                + ", selling_price = " + selling_price + ", gross_price = '"
+                + gross_price + "', date = '" + date;
+    }
+
+
+    public static  Goods nullItem(){
+        return  new Goods(-1, null, -1, -1, -1, -1, null);
+    }
+//
+    public boolean isNull(){
+        return good_name == null || quantity < 0 || buying_price == -1 || selling_price < 0 || gross_price < 0 || date == null;
     }
 }

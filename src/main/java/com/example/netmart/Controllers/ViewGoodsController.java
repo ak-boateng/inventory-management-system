@@ -56,9 +56,15 @@ public class ViewGoodsController implements Initializable {
     private StackDB bakery = new StackDB( "bakery");
     private StackDB canned = new StackDB( "canned");
     private StackDB dairy = new StackDB( "dairy");
+    // QUEUE INSTANCE
     private QueueDB dry = new QueueDB(5, "dry");
     private QueueDB frozen = new QueueDB(5, "frozen");
     private QueueDB meat = new QueueDB(5, "meat");
+    // LIST INSTANCE
+    private ListDB<Goods> produce = new ListDB<Goods>("produce", Goods.class);
+    private ListDB cleaner = new ListDB("cleaner", Goods.class);
+    private ListDB paper = new ListDB("paper", Goods.class);
+    private ListDB personal = new ListDB("personal", Goods.class);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,6 +79,8 @@ public class ViewGoodsController implements Initializable {
         listGoods = getData("beverages");
         view_goods_table.setItems(listGoods);
 
+        // set the default category and add a listener
+        category.setValue("All");
         category.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 listGoods = getData(newValue.toLowerCase());
@@ -105,6 +113,8 @@ public class ViewGoodsController implements Initializable {
                 case "meat":
                     meat.dequeue(_cat);
                     break;
+                case "produce":
+//                    produce.remove();
             }
             StackDB remove = new StackDB(category.getValue());
             remove.pop(category.getValue());
@@ -122,14 +132,16 @@ public class ViewGoodsController implements Initializable {
             ResultSet rs =  ps.executeQuery();
 
             while (rs.next()){
-                goods.add(new Goods(rs.getString("id"),
-                        rs.getString("good_name"),
-                        rs.getString("quantity"),
-                        rs.getString("buying_price"),
-                        rs.getString("selling_price"),
-                        rs.getString("gross_price"),
-                        rs.getString("date")
-                ));
+                if(rs.getString("good_name") != null) {
+                    goods.add(new Goods(rs.getInt("id"),
+                            rs.getString("good_name"),
+                            rs.getInt("quantity"),
+                            rs.getDouble("buying_price"),
+                            rs.getDouble("selling_price"),
+                            rs.getDouble("gross_price"),
+                            rs.getString("date")
+                    ));
+                }
             }
         } catch (Exception ex){
             ex.printStackTrace();
