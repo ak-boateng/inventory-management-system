@@ -36,7 +36,7 @@ public class AddGoods implements Initializable {
     public Label error_lbl;
 
     private final String[] categories = {"Beverages", "Bakery", "Canned", "Dairy", "Dry",
-            "Frozen Foods", "Meat", "Produce", "Cleaner", "Paper Goods", "Personal Care"};
+            "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,6 +52,11 @@ public class AddGoods implements Initializable {
     private StackDB bakery = new StackDB( "bakery");
     private StackDB canned = new StackDB( "canned");
     private StackDB dairy = new StackDB( "dairy");
+
+    // QUEUE INSTANCE
+    private QueueDB dry = new QueueDB(5, "dry");
+    private QueueDB frozen = new QueueDB(5, "frozen");
+    private QueueDB meat = new QueueDB(5, "meat");
 
     public void onSave(){
             if(!item_1.getText().isBlank() && !category.getValue().isBlank() && !item_1_qty.getText().isBlank() && !item_1_buying_price.getText().isBlank() && !item_1_selling_price.getText().isBlank()){
@@ -79,6 +84,15 @@ public class AddGoods implements Initializable {
                         break;
                     case "dairy":
                         dairy.push(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        break;
+                    case "dry":
+                        dry.enqueue(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        break;
+                    case "frozen":
+                        frozen.enqueue(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        break;
+                    case "meat":
+                        meat.enqueue(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
                         break;
                 }
 

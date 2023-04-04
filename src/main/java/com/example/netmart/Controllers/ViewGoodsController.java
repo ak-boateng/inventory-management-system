@@ -43,7 +43,7 @@ public class ViewGoodsController implements Initializable {
     private TableColumn<Goods, Integer> good_selling_price;
 
     private static final String[] categories = {"Beverages", "Bakery", "Canned", "Dairy", "Dry",
-            "Frozen Foods", "Meat", "Produce", "Cleaner", "Paper Goods", "Personal Care"};
+            "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
 
     ObservableList<Goods> listGoods;
     int index = -1;
@@ -56,6 +56,9 @@ public class ViewGoodsController implements Initializable {
     private StackDB bakery = new StackDB( "bakery");
     private StackDB canned = new StackDB( "canned");
     private StackDB dairy = new StackDB( "dairy");
+    private QueueDB dry = new QueueDB(5, "dry");
+    private QueueDB frozen = new QueueDB(5, "frozen");
+    private QueueDB meat = new QueueDB(5, "meat");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,12 +86,25 @@ public class ViewGoodsController implements Initializable {
             switch (_cat){
                 case "beverages":
                     beverages.pop(_cat);
+                    break;
                 case "bakery":
                     bakery.pop(_cat);
+                    break;
                 case "canned":
                     canned.pop(_cat);
+                    break;
                 case "dairy":
                     dairy.pop(_cat);
+                    break;
+                case "dry":
+                    dry.dequeue(_cat);
+                    break;
+                case "frozen":
+                    frozen.dequeue(_cat);
+                    break;
+                case "meat":
+                    meat.dequeue(_cat);
+                    break;
             }
             StackDB remove = new StackDB(category.getValue());
             remove.pop(category.getValue());

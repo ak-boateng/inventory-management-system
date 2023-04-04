@@ -83,7 +83,6 @@ public class StackDB {
         if (isEmpty()) {
             System.out.println("STACK EMPTY");
             JOptionPane.showMessageDialog(null, "Database is Empty!");
-            System.exit(1);
         }
 
 //        T poppedItem = null;
