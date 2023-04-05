@@ -1,13 +1,11 @@
 package com.example.netmart.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import javax.swing.*;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AddGoods implements Initializable {
@@ -21,22 +19,6 @@ public class AddGoods implements Initializable {
     public TextField item_1;
     public Button save_btn;
     public TextField total_cost;
-    public TextField item_2_qty;
-    public TextField item_2_buying_price;
-    public TextField item_2_selling_price;
-    public TextField item_2_gross_price;
-    public TextField item_2;
-    public TextField item_3_qty;
-    public TextField item_3_buying_price;
-    public TextField item_3_selling_price;
-    public TextField item_3_gross_price;
-    public TextField item_3;
-    public TextField item_4_qty;
-    public TextField item_4_buying_price;
-    public TextField item_4_selling_price;
-    public TextField item_4_gross_price;
-    public TextField item_4;
-    public Label error_lbl;
 
     private final String[] categories = {"Beverages", "Bakery", "Canned", "Dairy", "Dry",
             "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
@@ -68,9 +50,9 @@ public class AddGoods implements Initializable {
     private StackDB dairy = new StackDB( "dairy");
 
     // QUEUE INSTANCE
-    private QueueDB dry = new QueueDB(5, "dry");
-    private QueueDB frozen = new QueueDB(5, "frozen");
-    private QueueDB meat = new QueueDB(5, "meat");
+    private QueueDB dry = new QueueDB(10, "dry");
+    private QueueDB frozen = new QueueDB(10, "frozen");
+    private QueueDB meat = new QueueDB(10, "meat");
 
     // LIST INSTANCE
     private ListDB<Goods> produce = new ListDB<Goods>("produce", Goods.class);
@@ -80,7 +62,7 @@ public class AddGoods implements Initializable {
 
     public void onSave(){
             if(!item_1.getText().isBlank() && !category.getValue().isBlank() && !item_1_qty.getText().isBlank() && !item_1_buying_price.getText().isBlank() && !item_1_selling_price.getText().isBlank()){
-            // GETTING ITEM 1 VALUES
+                // GETTING ITEM 1 VALUES
                 String cat = category.getValue();
                 String item1 = item_1.getText();
                 int quantity = Integer.parseInt(item_1_qty.getText());

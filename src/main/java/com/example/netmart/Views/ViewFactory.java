@@ -61,16 +61,16 @@ public class ViewFactory {
     }
 
     // GETTING ADD GOODS VIEW
-    public AnchorPane getAddGoodsView() {
-        if(addGoodsView == null){ // PREVENTS LOADING DASHBOARD MORE THAN ONCE
-            try{
-                addGoodsView = new FXMLLoader(getClass().getResource("/FXML/addGoods.fxml")).load();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return addGoodsView;
-    }
+//    public AnchorPane getAddGoodsView() {
+//        if(addGoodsView == null){ // PREVENTS LOADING DASHBOARD MORE THAN ONCE
+//            try{
+//                addGoodsView = new FXMLLoader(getClass().getResource("/FXML/addGoods.fxml")).load();
+//            } catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }
+//        return addGoodsView;
+//    }
 
     // GETTING VIEW GOODS VIEW
     public AnchorPane getViewGoodsView() {

@@ -26,7 +26,7 @@ public class LeftMenuController implements Initializable {
     private void addListeners(){
         dashboard_btn.setOnAction(event -> onDashboard());
         view_vendor_btn.setOnAction(event -> onViewVendors());
-        add_goods_btn.setOnAction(event -> onAddGoods());
+//        add_goods_btn.setOnAction(event -> onAddGoods());
         view_goods_btn.setOnAction(event -> onViewGoods());
         view_bills_btn.setOnAction(event -> onViewBills());
         issued_goods_btn.setOnAction(event -> onIssuedGoods());

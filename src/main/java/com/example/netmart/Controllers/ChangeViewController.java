@@ -16,7 +16,7 @@ public class ChangeViewController implements Initializable {
         Model.getInstance().getViewFactory().getSelectedMenuItem().addListener(((observableValue, oldVal, newVal) -> {
             switch (newVal){
                 case "viewVendors" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewVendorsView());
-                case "addGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getAddGoodsView());
+//                case "addGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getAddGoodsView());
                 case "viewGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewGoodsView());
                 case "viewBills" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewBillsView());
                 case "issuedGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getIssuedGoodsView());
