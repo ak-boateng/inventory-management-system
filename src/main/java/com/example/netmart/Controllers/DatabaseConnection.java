@@ -1,8 +1,6 @@
 package com.example.netmart.Controllers;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseConnection {
 
@@ -12,5 +10,21 @@ public class DatabaseConnection {
         String password = "network123";
         Connection connection = DriverManager.getConnection(url, user, password);
         return connection;
+    }
+
+    public ResultSet getAdminData(String name, String password){
+        Statement statement;
+        ResultSet resultSet = null;
+        try{
+            statement = getConnection().createStatement();
+            String query = "SELECT * FROM users WHERE name= '" + name + "' AND password = '" + password + "';";
+            System.out.println("Query: " + query);
+            resultSet = statement.executeQuery(query);
+            System.out.println("RS: " + resultSet.toString());
+        }catch (Exception ex){
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return resultSet;
     }
 }

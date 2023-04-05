@@ -26,11 +26,11 @@
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
-         <Label fx:id="error_lbl" styleClass="error-lbl" text="" />
+         <Label fx:id="error_lbl" alignment="CENTER" styleClass="error-lbl" text="" textAlignment="CENTER" />
          <Label text="USERNAME" />
          <TextField fx:id="name_field" prefWidth="365.0" promptText="Enter username" styleClass="input-field" />
          <Label layoutX="10.0" layoutY="10.0" text="PASSWORD" />
-         <PasswordField fx:id="password_field" prefHeight="42.0" prefWidth="358.0" promptText="Enter password"/>
+         <PasswordField fx:id="password_field" prefHeight="42.0" prefWidth="358.0" promptText="Enter password" />
          <Button fx:id="login_btn" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="361.0" style="-fx-alignment: center;" styleClass="login-button" text="LOG IN" VBox.vgrow="ALWAYS" />
       </VBox>
    </StackPane>

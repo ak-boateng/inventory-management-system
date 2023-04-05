@@ -83,11 +83,11 @@ public class AddGoods implements Initializable {
             // GETTING ITEM 1 VALUES
                 String cat = category.getValue();
                 String item1 = item_1.getText();
-                String quantity = item_1_qty.getText();
-                String buying_price = item_1_buying_price.getText();
-                String selling_price = item_1_selling_price.getText();
+                int quantity = Integer.parseInt(item_1_qty.getText());
+                double buying_price = Double.parseDouble(item_1_buying_price.getText());
+                double selling_price = Double.parseDouble(item_1_selling_price.getText());
                 String date_stamp = String.valueOf(date.getValue());
-                int gross_price = Integer.parseInt(quantity) * Integer.parseInt(buying_price);
+                double gross_price = quantity * buying_price;
                 item_1_gross_price.setText(String.valueOf(gross_price));
                 String _indexStr = index.getText();
                 int _index = -1;
@@ -97,52 +97,52 @@ public class AddGoods implements Initializable {
                 String _cat = cat.toLowerCase().split("/")[0].split(" ")[0];
                 switch (_cat){
                     case "beverages":
-                        beverages.push(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        beverages.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
                         break;
                     case "bakery":
-                        bakery.push(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        bakery.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
                         break;
                     case "canned":
-                        canned.push(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        canned.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
                         break;
                     case "dairy":
-                        dairy.push(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        dairy.push(cat.toLowerCase(), item1, quantity , buying_price, selling_price , gross_price, date_stamp);
                         break;
                     case "dry":
-                        dry.enqueue(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        dry.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
                         break;
                     case "frozen":
-                        frozen.enqueue(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        frozen.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
                         break;
                     case "meat":
-                        meat.enqueue(cat.toLowerCase(), item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp);
+                        meat.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
                         break;
                     case "produce":
                         if(_index == -1){
-                            produce.add(new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            produce.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            produce.add(_index, new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            produce.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                     case "cleaner":
                         if(_index == -1){
-                            cleaner.add(new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            cleaner.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            cleaner.add(_index, new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            cleaner.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                     case "paper":
                         if(_index == -1){
-                            paper.add(new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            paper.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            paper.add(_index, new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            paper.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                     case "personal":
                         if(_index == -1){
-                            personal.add(new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            personal.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            personal.add(_index, new Goods(-1,  item1, Integer.parseInt(quantity) , Double.parseDouble(buying_price) , Double.parseDouble(selling_price) , gross_price, date_stamp));
+                            personal.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                 }

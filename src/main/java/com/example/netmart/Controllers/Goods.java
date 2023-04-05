@@ -79,8 +79,8 @@ public class Goods {
     public String sqlStr() {
         return "good_name = '" + good_name + "', quantity = " + quantity + ", buying_price = "
                 + buying_price
-                + ", selling_price = " + selling_price + ", gross_price = '"
-                + gross_price + "', date = '" + date;
+                + ", selling_price = " + selling_price + ", gross_price = "
+                + gross_price + ", date = '" + date+ "'";
     }
 
 

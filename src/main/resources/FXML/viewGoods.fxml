@@ -16,13 +16,13 @@
             <Line endX="661.0" layoutX="147.0" layoutY="79.0" startX="-100.0" />
             <TableView fx:id="view_goods_table" layoutX="46.0" layoutY="132.0" prefHeight="514.0" prefWidth="762.0">
                 <columns>
-                    <TableColumn fx:id="good_id" prefWidth="49.0" text="ID" />
-                    <TableColumn fx:id="good_name" prefWidth="167.0" text="Good Name" />
-                    <TableColumn fx:id="good_qty" prefWidth="98.0" text="Quantity" />
-                    <TableColumn fx:id="good_buying_price" prefWidth="121.0" text="Buying Price" />
-                    <TableColumn fx:id="good_selling_price" prefWidth="131.0" text="Selling Price" />
-                    <TableColumn fx:id="good_gross_price" prefWidth="102.0" text="Gross Price" />
-                    <TableColumn fx:id="good_date" prefWidth="93.0" text="Date" />
+                    <TableColumn fx:id="good_id" editable="false" prefWidth="49.0" sortable="false" text="ID" />
+                    <TableColumn fx:id="good_name" editable="false" prefWidth="167.0" sortable="false" text="Good Name" />
+                    <TableColumn fx:id="good_qty" editable="false" prefWidth="98.0" sortable="false" text="Quantity" />
+                    <TableColumn fx:id="good_buying_price" editable="false" prefWidth="121.0" sortable="false" text="Buying Price" />
+                    <TableColumn fx:id="good_selling_price" editable="false" prefWidth="131.0" sortable="false" text="Selling Price" />
+                    <TableColumn fx:id="good_gross_price" editable="false" prefWidth="102.0" sortable="false" text="Gross Price" />
+                    <TableColumn fx:id="good_date" editable="false" prefWidth="93.0" sortable="false" text="Date" />
                 </columns>
             </TableView>
             <Button layoutX="47.0" layoutY="664.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="762.0" text="SUBMIT TO ISSUE" />

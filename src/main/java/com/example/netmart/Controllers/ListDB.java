@@ -67,6 +67,7 @@ public class ListDB<T> {
 
     private  void addItem(T x, int index){
         try{
+            // shifting all elements to the right of the index
             for(int i = size - 1; i >= index; i--){
                 T currentItem = getItem(i);
                 setItem(i + 1, currentItem);
@@ -101,10 +102,15 @@ public class ListDB<T> {
             JOptionPane.showMessageDialog(null, "Index out of bounds: " + index);
 //            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
-        return null;
+        return getItem(index);
     }
-
+    public T remove() {
+        return removeItem(size);
+    }
     public T remove(int index) {
+        return removeItem(index);
+    }
+    private T removeItem(int index) {
         if (index < 0 || index >= size) {
             JOptionPane.showMessageDialog(null, "Index out of bounds: " + index);
 //            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
@@ -156,7 +162,9 @@ public class ListDB<T> {
         try{
             String updateQuery = "";
             if(clazz.equals(Goods.class)){
+
                 Goods x = (Goods) goods;
+                System.out.println("GoodsID = " + x.getGood_id());
                 if(index == size){
                     updateQuery = "INSERT INTO " + cat + "(id, good_name, quantity, buying_price, selling_price, gross_price, date) VALUES (" +
                             + index + ", '" + x.getGood_name() + "', " + x.getQuantity() + ", '"

@@ -9,6 +9,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import javax.swing.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,26 +47,31 @@ public class ViewGoodsController implements Initializable {
     private static final String[] categories = {"Beverages", "Bakery", "Canned", "Dairy", "Dry",
             "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
 
+    String selectedCategory = "All";
+    public static Goods selectedItem = Goods.nullItem();
     ObservableList<Goods> listGoods;
-    int index = -1;
-    Connection conn = null;
-    ResultSet rs = null;
-    PreparedStatement ps = null;
+
+//    int index = -1;
+//    Connection conn = null;
+//    ResultSet rs = null;
+//    PreparedStatement ps = null;
 
     // STACKS INSTANCE
-    private StackDB beverages = new StackDB( "beverages");
-    private StackDB bakery = new StackDB( "bakery");
-    private StackDB canned = new StackDB( "canned");
-    private StackDB dairy = new StackDB( "dairy");
+    private final StackDB beverages = new StackDB( "beverages");
+    private final StackDB bakery = new StackDB( "bakery");
+    private final StackDB canned = new StackDB( "canned");
+    private final StackDB dairy = new StackDB( "dairy");
     // QUEUE INSTANCE
-    private QueueDB dry = new QueueDB(5, "dry");
-    private QueueDB frozen = new QueueDB(5, "frozen");
-    private QueueDB meat = new QueueDB(5, "meat");
+    private final QueueDB dry = new QueueDB(5, "dry");
+    private final QueueDB frozen = new QueueDB(5, "frozen");
+    private final QueueDB meat = new QueueDB(5, "meat");
+
     // LIST INSTANCE
     private ListDB<Goods> produce = new ListDB<Goods>("produce", Goods.class);
-    private ListDB cleaner = new ListDB("cleaner", Goods.class);
-    private ListDB paper = new ListDB("paper", Goods.class);
-    private ListDB personal = new ListDB("personal", Goods.class);
+    private static ObservableList<Goods> produceItems;
+    private final ListDB cleaner = new ListDB("cleaner", Goods.class);
+    private final ListDB paper = new ListDB("paper", Goods.class);
+    private final ListDB personal = new ListDB("personal", Goods.class);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,9 +95,21 @@ public class ViewGoodsController implements Initializable {
             }
         });
 
+        // listen to TableView's selection changes
+        view_goods_table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                selectedItem = newValue;
+
+            } else {
+                // No item is selected
+                selectedItem = Goods.nullItem();
+            }
+        });
+
         remove_btn.setOnAction(event -> {
             String cat = category.getValue();
             String _cat = cat.toLowerCase().split("/")[0].split(" ")[0];
+            int _toRemove = selectedItem.getGood_id();
             switch (_cat){
                 case "beverages":
                     beverages.pop(_cat);
@@ -114,10 +133,37 @@ public class ViewGoodsController implements Initializable {
                     meat.dequeue(_cat);
                     break;
                 case "produce":
-//                    produce.remove();
+                    if(_toRemove < 0){
+                        produce.remove();
+                    }else{
+                        produce.remove(_toRemove);
+                    }
+                case "cleaner":
+                    if(_toRemove < 0){
+                        cleaner.remove();
+                    }else{
+                        cleaner.remove(_toRemove);
+                    }
+                    break;
+                case "paper":
+                    if(_toRemove < 0){
+                        paper.remove();
+                    }else{
+                        paper.remove(_toRemove);
+                    }
+                    break;
+                case "personal":
+                    if(_toRemove < 0){
+                        personal.remove();
+                    }else{
+                        personal.remove(_toRemove);
+                    }
+                    break;
+                default:
+                    System.out.println("Category not supported");
+                    JOptionPane.showMessageDialog(null, "Category not supported!");
+                    break;
             }
-            StackDB remove = new StackDB(category.getValue());
-            remove.pop(category.getValue());
         });
     }
 
@@ -148,4 +194,5 @@ public class ViewGoodsController implements Initializable {
         }
         return goods;
     }
+
 }

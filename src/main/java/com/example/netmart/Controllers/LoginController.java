@@ -26,26 +26,17 @@ public class LoginController implements Initializable {
 
     public void onLogin(){
         Stage stage = (Stage) error_lbl.getScene().getWindow();
-        Model.getInstance().getViewFactory().closeStage(stage);
-        Model.getInstance().getViewFactory().showMainWindow();
 
-//        if(!name_field.getText().isBlank() && !password_field.getText().isBlank()){
-//            String username = name_field.getText();
-//            String password = password_field.getText();
-//            try{
-//                Connection connection = DatabaseConnection.getConnection();
-//                // CREATE
-//                String createSql = "INSERT INTO users (username, password) VALUES (?, ?)";
-//                PreparedStatement createStatement = connection.prepareStatement(createSql);
-//                createStatement.setString(1, username);
-//                createStatement.setString(2, password);
-//                createStatement.executeUpdate();
-////                System.out.println("Record created.");
-//            } catch (Exception ex){
-//                ex.printStackTrace();
-//            }
-//        } else{
-//            error_lbl.setText("Please enter your username and password!");
-//        }
+        if(!name_field.getText().isBlank() && !password_field.getText().isBlank()){
+            Model.getInstance().evaluateAdminCred(name_field.getText(), password_field.getText());
+            if(Model.getInstance().getAdminLoginSuccessFlag()){
+                Model.getInstance().getViewFactory().showMainWindow();
+                Model.getInstance().getViewFactory().closeStage(stage);
+            }
+        }else {
+            name_field.setText("");
+            password_field.setText("");
+            error_lbl.setText("Wrong credentials!");
+        }
     }
 }
