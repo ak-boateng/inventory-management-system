@@ -17,7 +17,7 @@ public class ViewFactory {
     // VIEW VENDORS VIEW
     private AnchorPane viewVendorsView;
     // ADD GOODS
-    private AnchorPane addGoodsView;
+//    private AnchorPane addGoodsView;
     // VIEW GOODS
     private AnchorPane viewGoodsView;
     // VIEW BILLS
@@ -25,7 +25,7 @@ public class ViewFactory {
     // ISSUED GOODS
     private AnchorPane IssuedGoodsView;
     // VIEW ISSUED GOODS
-    private AnchorPane viewIssuedGoodsView;
+//    private AnchorPane viewIssuedGoodsView;
 
     // CONSTRUCTOR
     public ViewFactory(){
@@ -109,16 +109,16 @@ public class ViewFactory {
     }
 
     // GETTING VIEW ISSUED GOODS VIEW
-    public AnchorPane getViewIssuedGoodsView() {
-        if(viewIssuedGoodsView == null){ // PREVENTS LOADING DASHBOARD MORE THAN ONCE
-            try{
-                viewIssuedGoodsView = new FXMLLoader(getClass().getResource("/FXML/viewIssuedGoods.fxml")).load();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return viewIssuedGoodsView;
-    }
+//    public AnchorPane getViewIssuedGoodsView() {
+//        if(viewIssuedGoodsView == null){ // PREVENTS LOADING DASHBOARD MORE THAN ONCE
+//            try{
+//                viewIssuedGoodsView = new FXMLLoader(getClass().getResource("/FXML/viewIssuedGoods.fxml")).load();
+//            } catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }
+//        return viewIssuedGoodsView;
+//    }
 
     // TO DISPLAY LOGIN WINDOW FOR AUTHENTICATION
     public void showLoginWindow(){

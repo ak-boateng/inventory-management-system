@@ -20,7 +20,7 @@ public class ChangeViewController implements Initializable {
                 case "viewGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewGoodsView());
                 case "viewBills" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewBillsView());
                 case "issuedGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getIssuedGoodsView());
-                case "viewIssuedGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewIssuedGoodsView());
+//                case "viewIssuedGoods" -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getViewIssuedGoodsView());
                 default -> dashboard_container.setCenter(Model.getInstance().getViewFactory().getDashboardView());
             }
         }));

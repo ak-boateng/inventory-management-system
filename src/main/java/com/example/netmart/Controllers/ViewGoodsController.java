@@ -1,26 +1,21 @@
 package com.example.netmart.Controllers;
 
-import com.example.netmart.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Objects;
-import java.util.ResourceBundle;
+
 
 public class ViewGoodsController {
     public ChoiceBox<String> category;
@@ -55,6 +50,8 @@ public class ViewGoodsController {
     private static final String[] categories = {"Beverages", "Bakery", "Canned", "Dairy", "Dry",
             "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
 
+    String selectedCategory = "All";
+    private static ObservableList<Goods> allGoods = FXCollections.observableArrayList();
     public static Goods selectedItem = Goods.nullItem();
     public static ObservableList<Goods> listGoods = FXCollections.observableArrayList();
 
@@ -102,8 +99,7 @@ public class ViewGoodsController {
 
         Integer lastId = null;
         int size = 0;
-
-//        good_id.setCellValueFactory(new PropertyValueFactory<>("good_id"));
+        good_id.setCellValueFactory(new PropertyValueFactory<>("good_id"));
         good_name.setCellValueFactory(new PropertyValueFactory<>("good_name"));
         good_qty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         good_buying_price.setCellValueFactory(new PropertyValueFactory<>("buying_price"));
@@ -123,6 +119,9 @@ public class ViewGoodsController {
                 view_goods_table.setItems(listGoods);
             }
         });
+
+        // Show all goods in the table
+        view_goods_table.setItems(allGoods);
 
         // listen to TableView's selection changes
         view_goods_table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

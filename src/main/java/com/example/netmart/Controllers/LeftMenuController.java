@@ -30,7 +30,7 @@ public class LeftMenuController implements Initializable {
         view_goods_btn.setOnAction(event -> onViewGoods());
         view_bills_btn.setOnAction(event -> onViewBills());
         issued_goods_btn.setOnAction(event -> onIssuedGoods());
-        view_issued_goods_btn.setOnAction(event -> onViewIssuedGoods());
+//        view_issued_goods_btn.setOnAction(event -> onViewIssuedGoods());
     }
 
     private void onDashboard(){
@@ -46,5 +46,5 @@ public class LeftMenuController implements Initializable {
     private void onViewGoods(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewGoods");}
     private void onViewBills(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewBills");}
     private void onIssuedGoods(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("issuedGoods");}
-    private void onViewIssuedGoods(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewIssuedGoods");}
+//    private void onViewIssuedGoods(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewIssuedGoods");}
 }

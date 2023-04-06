@@ -6,6 +6,7 @@ module com.example.netmart {
     requires org.xerial.sqlitejdbc;
     requires mysql.connector.java;
     requires java.desktop;
+    requires com.google.gson;
 
 
     opens com.example.netmart to javafx.fxml;

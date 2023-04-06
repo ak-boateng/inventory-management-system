@@ -34,19 +34,14 @@
                <FontAwesomeIconView glyphName="GRAPH" size="20" text="" />
             </graphic>
          </Button>
-         <Button fx:id="view_bills_btn" layoutX="10.0" layoutY="58.0" mnemonicParsing="false" prefWidth="180.0" text="VIEW BILLS">
-            <graphic>
-               <FontAwesomeIconView glyphName="LIST" size="20" />
-            </graphic>
-         </Button>
          <Button fx:id="issued_goods_btn" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" prefWidth="180.0" text="ISSUED GOODS" textOverrun="CLIP">
             <graphic>
                <FontAwesomeIconView glyphName="LIST" size="20" text="" />
             </graphic>
          </Button>
-         <Button fx:id="view_issued_goods_btn" layoutX="10.0" layoutY="106.0" mnemonicParsing="false" prefWidth="180.0" text="VIEW ISSUED GOODS">
+         <Button fx:id="view_bills_btn" layoutX="10.0" layoutY="58.0" mnemonicParsing="false" prefWidth="180.0" text="VIEW BILLS">
             <graphic>
-               <FontAwesomeIconView size="20" />
+               <FontAwesomeIconView glyphName="LIST" size="20" />
             </graphic>
          </Button>
          <Line endX="150.0" />
