@@ -1,5 +1,6 @@
 package com.example.netmart.Controllers;
 
+import com.example.netmart.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,21 +19,13 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ViewGoodsController implements Initializable {
+public class ViewGoodsController {
     public ChoiceBox<String> category;
     public Button remove_btn;
     public Button add_good_btn;
-    public DatePicker date;
-    public VBox indexVBox;
-    public TextField index;
-//    public TextField item_1;
-    public Button save_btn;
-//    public TextField item_1_qty;
-//    public TextField item_1_buying_price;
-//    public TextField item_1_selling_price;
-//    public TextField item_1_gross_price;
 
 
     @FXML
@@ -63,48 +56,54 @@ public class ViewGoodsController implements Initializable {
             "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
 
     public static Goods selectedItem = Goods.nullItem();
-    ObservableList<Goods> listGoods;
+    public static ObservableList<Goods> listGoods = FXCollections.observableArrayList();
 
-//    int index = -1;
-//    Connection conn = null;
-//    ResultSet rs = null;
-//    PreparedStatement ps = null;
+
 
     // STACKS INSTANCE
-    private final StackDB beverages = new StackDB("beverages");
-    private final StackDB bakery = new StackDB("bakery");
-    private final StackDB canned = new StackDB("canned");
-    private final StackDB dairy = new StackDB("dairy");
+    public static StackDB beverages = new StackDB( "beverages");
+    public static ObservableList<Goods> beverageItems;
+    public static StackDB bakery = new StackDB( "bakery");
+    public static ObservableList<Goods> bakeryItems;
+
+    public static StackDB canned = new StackDB( "canned");
+    public static ObservableList<Goods> cannedItems;
+
+    public static StackDB dairy = new StackDB( "dairy");
+    public static ObservableList<Goods> dairyItems;
+
+
     // QUEUE INSTANCE
-    private final QueueDB dry = new QueueDB(10, "dry");
-    private final QueueDB frozen = new QueueDB(10, "frozen");
-    private final QueueDB meat = new QueueDB(10, "meat");
+    public static QueueDB dry = new QueueDB(10, "dry");
+    public static ObservableList<Goods> dryItems;
+
+    public static QueueDB frozen = new QueueDB(10, "frozen");
+    public static ObservableList<Goods> frozenItems;
+
+    public static QueueDB meat = new QueueDB(10, "meat");
+    public static ObservableList<Goods> meatItems;
+
 
     // LIST INSTANCE
-    private ListDB<Goods> produce = new ListDB<Goods>("produce", Goods.class);
-    private static ObservableList<Goods> produceItems;
-    private final ListDB cleaner = new ListDB("cleaner", Goods.class);
-    private final ListDB paper = new ListDB("paper", Goods.class);
-    private final ListDB personal = new ListDB("personal", Goods.class);
+    public static ListDB<Goods> produce = new ListDB<Goods>("produce", Goods.class);
+    public static ObservableList<Goods> produceItems;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public static ListDB cleaner = new ListDB("cleaner", Goods.class);
+    public static ObservableList<Goods> cleanerItems;
 
-//        indexVBox.setVisible(false);
-//        category.getItems().addAll(categories);
-//        save_btn.setOnAction(event -> onSave());
-//        category.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-//            if (newValue == "Produce" || newValue == "Cleaner" || newValue ==  "Paper" || newValue ==  "Personal"){
-//                indexVBox.setVisible(true);
-//            }else {
-//                indexVBox.setVisible(false);
-//            }
-//        });
+    public static ListDB paper = new ListDB("paper", Goods.class);
+    public static ObservableList<Goods> paperItems;
+
+    public static ListDB personal = new ListDB("personal", Goods.class);
+    public static ObservableList<Goods> personalItems;
+
+
+    public void initialize() {
 
         Integer lastId = null;
         int size = 0;
 
-        good_id.setCellValueFactory(new PropertyValueFactory<>("good_id"));
+//        good_id.setCellValueFactory(new PropertyValueFactory<>("good_id"));
         good_name.setCellValueFactory(new PropertyValueFactory<>("good_name"));
         good_qty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         good_buying_price.setCellValueFactory(new PropertyValueFactory<>("buying_price"));
@@ -112,7 +111,7 @@ public class ViewGoodsController implements Initializable {
         good_gross_price.setCellValueFactory(new PropertyValueFactory<>("gross_price"));
         good_date.setCellValueFactory(new PropertyValueFactory<>("date"));
         category.getItems().addAll(categories);
-        listGoods = getData("beverages");
+        listGoods = getCategoryData("beverages");
         view_goods_table.setItems(listGoods);
 
 
@@ -120,7 +119,7 @@ public class ViewGoodsController implements Initializable {
         category.setValue("All");
         category.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                listGoods = getData(newValue.toLowerCase());
+                listGoods = getCategoryData(newValue.toLowerCase());
                 view_goods_table.setItems(listGoods);
             }
         });
@@ -136,11 +135,10 @@ public class ViewGoodsController implements Initializable {
         });
 
         // ADD GOOD BTN
-        add_good_btn.setOnAction(event -> addGoodModal());
+        add_good_btn.setOnAction(event -> addGood());
 
 
-
-        // REMOVE BTN
+        // REMOVE ITEMS
         remove_btn.setOnAction(event -> {
             String cat = category.getValue();
             String _cat = cat.toLowerCase().split("/")[0].split(" ")[0];
@@ -148,140 +146,158 @@ public class ViewGoodsController implements Initializable {
             switch (_cat) {
                 case "beverages":
                     beverages.pop(_cat);
+                    beverageItems.remove(0);
                     break;
                 case "bakery":
                     bakery.pop(_cat);
+                    bakeryItems.remove(0);
                     break;
                 case "canned":
                     canned.pop(_cat);
+                    cannedItems.remove(0);
                     break;
                 case "dairy":
                     dairy.pop(_cat);
+                    dairyItems.remove(0);
                     break;
                 case "dry":
                     dry.dequeue(_cat);
+                    dryItems.remove(0);
                     break;
                 case "frozen":
                     frozen.dequeue(_cat);
+                    frozenItems.remove(0);
                     break;
                 case "meat":
                     meat.dequeue(_cat);
+                    meatItems.remove(0);
                     break;
                 case "produce":
                     if (_toRemove < 0) {
                         produce.remove();
+                        produceItems.remove(0);
                     } else {
                         produce.remove(_toRemove);
+                        produceItems.remove(0);
                     }
                 case "cleaner":
                     if (_toRemove < 0) {
                         cleaner.remove();
+                        cleanerItems.remove(0);
                     } else {
                         cleaner.remove(_toRemove);
+                        cleanerItems.remove(0);
                     }
                     break;
                 case "paper":
                     if (_toRemove < 0) {
                         paper.remove();
+                        paperItems.remove(0);
                     } else {
                         paper.remove(_toRemove);
+                        paperItems.remove(0);
                     }
                     break;
                 case "personal":
                     if (_toRemove < 0) {
                         personal.remove();
+                        personalItems.remove(0);
                     } else {
                         personal.remove(_toRemove);
+                        personalItems.remove(0);
                     }
                     break;
                 default:
-                    System.out.println("Category not supported");
+                    System.out.println("No Category Selected");
                     JOptionPane.showMessageDialog(null, "Category not supported!");
                     break;
             }
         });
     }
 
-    // ON SAVE BTN
-//    public void onSave(){
-//        if(!item_1.getText().isBlank() && !category.getValue().isBlank() && !item_1_qty.getText().isBlank() && !item_1_buying_price.getText().isBlank() && !item_1_selling_price.getText().isBlank()){
-//            // GETTING ITEM 1 VALUES
-//            String cat = category.getValue();
-//            String item1 = item_1.getText();
-//            int quantity = Integer.parseInt(item_1_qty.getText());
-//            double buying_price = Double.parseDouble(item_1_buying_price.getText());
-//            double selling_price = Double.parseDouble(item_1_selling_price.getText());
-//            String date_stamp = String.valueOf(date.getValue());
-//            double gross_price = quantity * buying_price;
-//            item_1_gross_price.setText(String.valueOf(gross_price));
-//            String _indexStr = index.getText();
-//            int _index = -1;
-//            if(!_indexStr.isEmpty()){ _index = Integer.parseInt(_indexStr);}
-//            System.out.println(_index);
-//
-//            String _cat = cat.toLowerCase().split("/")[0].split(" ")[0];
-//            switch (_cat){
-//                case "beverages":
-//                    beverages.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
-//                    break;
-//                case "bakery":
-//                    bakery.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
-//                    break;
-//                case "canned":
-//                    canned.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
-//                    break;
-//                case "dairy":
-//                    dairy.push(cat.toLowerCase(), item1, quantity , buying_price, selling_price , gross_price, date_stamp);
-//                    break;
-//                case "dry":
-//                    dry.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
-//                    break;
-//                case "frozen":
-//                    frozen.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
-//                    break;
-//                case "meat":
-//                    meat.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
-//                    break;
-//                case "produce":
-//                    if(_index == -1){
-//                        produce.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }else{
-//                        produce.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }
-//                    break;
-//                case "cleaner":
-//                    if(_index == -1){
-//                        cleaner.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }else{
-//                        cleaner.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }
-//                    break;
-//                case "paper":
-//                    if(_index == -1){
-//                        paper.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }else{
-//                        paper.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }
-//                    break;
-//                case "personal":
-//                    if(_index == -1){
-//                        personal.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }else{
-//                        personal.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
-//                    }
-//                    break;
-//            }
-//            JOptionPane.showMessageDialog(null, "Added successfully!");
-//        } else{
-//            JOptionPane.showMessageDialog(null, "Please all fields are required!");
-//        }
-//    };
+
+    public ObservableList<Goods> getCategoryData(String category){
+        switch (category){
+            case "beverages":
+                if(beverageItems == null){
+                    beverageItems = getData(category);
+                }
+                return beverageItems;
+            case "bakery":
+                if(bakeryItems == null){
+                    bakeryItems = getData(category);
+                }
+                return bakeryItems;
+            case "dry":
+                if(dryItems == null){
+                    dryItems = getData(category);
+                }
+                return dryItems;
+            case "frozen":
+                if(frozenItems == null){
+                    frozenItems = getData(category);
+                }
+                return frozenItems;
+            case "meat":
+                if(meatItems == null){
+                    meatItems = getData(category);
+                }
+                return meatItems;
+            case "produce":
+                if(produceItems == null) {
+                    produceItems = getData(category);
+                return produceItems;
+                }
+            case "canned":
+                if(cannedItems == null){
+                    cannedItems = getData(category);
+                }
+                return cannedItems;
+            case "dairy":
+                if(dairyItems == null){
+                    dairyItems = getData(category);
+                }
+                return dairyItems;
+            case "cleaner":
+                if(cleanerItems == null){
+                    cleanerItems = getData(category);
+                }
+                return cleanerItems;
+            case "paper":
+                if(paperItems == null){
+                    paperItems = getData(category);
+                }
+                return paperItems;
+            case "personal":
+                if(personalItems == null){
+                    personalItems = getData(category);
+                }
+                return personalItems;
+            default:
+                JOptionPane.showMessageDialog(null, "No such category!");
+        }
+        return null;
+    }
+    private void addGood(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/addGoodModal.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add New Good");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
 
     public ObservableList<Goods> getData(String category) {
         ObservableList<Goods> goods = FXCollections.observableArrayList();
         try {
             Connection connection = DatabaseConnection.getConnection();
-
 
             String query = String.format("SELECT * FROM %s", category);
             PreparedStatement ps = connection.prepareStatement(query);
@@ -305,19 +321,6 @@ public class ViewGoodsController implements Initializable {
         return goods;
     }
 
-    public void addGoodModal(){
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/addGoodModal.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Add New Vendor");
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
+
 }
 

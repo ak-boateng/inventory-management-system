@@ -43,22 +43,7 @@ public class AddGoods implements Initializable {
     Integer lastId = null;
     int size = 0;
 
-    // STACKS INSTANCE
-    private StackDB beverages = new StackDB( "beverages");
-    private StackDB bakery = new StackDB( "bakery");
-    private StackDB canned = new StackDB( "canned");
-    private StackDB dairy = new StackDB( "dairy");
 
-    // QUEUE INSTANCE
-    private QueueDB dry = new QueueDB(10, "dry");
-    private QueueDB frozen = new QueueDB(10, "frozen");
-    private QueueDB meat = new QueueDB(10, "meat");
-
-    // LIST INSTANCE
-    private ListDB<Goods> produce = new ListDB<Goods>("produce", Goods.class);
-    private ListDB cleaner = new ListDB("cleaner", Goods.class);
-    private ListDB paper = new ListDB("paper", Goods.class);
-    private ListDB personal = new ListDB("personal", Goods.class);
 
     public void onSave(){
             if(!item_1.getText().isBlank() && !category.getValue().isBlank() && !item_1_qty.getText().isBlank() && !item_1_buying_price.getText().isBlank() && !item_1_selling_price.getText().isBlank()){
@@ -75,56 +60,70 @@ public class AddGoods implements Initializable {
                 int _index = -1;
                 if(!_indexStr.isEmpty()){ _index = Integer.parseInt(_indexStr);}
                 System.out.println(_index);
-
                 String _cat = cat.toLowerCase().split("/")[0].split(" ")[0];
                 switch (_cat){
                     case "beverages":
-                        beverages.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.beverages.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.beverageItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "bakery":
-                        bakery.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.bakery.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.bakeryItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "canned":
-                        canned.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.canned.push(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.cannedItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "dairy":
-                        dairy.push(cat.toLowerCase(), item1, quantity , buying_price, selling_price , gross_price, date_stamp);
+                        ViewGoodsController.dairy.push(cat.toLowerCase(), item1, quantity , buying_price, selling_price , gross_price, date_stamp);
+                        ViewGoodsController.dairyItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "dry":
-                        dry.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.dry.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.dryItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "frozen":
-                        frozen.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.frozen.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.frozenItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "meat":
-                        meat.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.meat.enqueue(cat.toLowerCase(), item1, quantity , buying_price , selling_price , gross_price, date_stamp);
+                        ViewGoodsController.meatItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         break;
                     case "produce":
                         if(_index == -1){
-                            produce.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.produce.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.produceItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            produce.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.produce.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.produceItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                     case "cleaner":
                         if(_index == -1){
-                            cleaner.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.cleaner.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.cleanerItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            cleaner.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.cleaner.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.cleanerItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                     case "paper":
                         if(_index == -1){
-                            paper.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.paper.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.paperItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            paper.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.paper.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.paperItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                     case "personal":
                         if(_index == -1){
-                            personal.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.personal.add(new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.personalItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }else{
-                            personal.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.personal.add(_index, new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
+                            ViewGoodsController.personalItems.add(0,new Goods(-1,  item1, quantity , buying_price , selling_price , gross_price, date_stamp));
                         }
                         break;
                 }
