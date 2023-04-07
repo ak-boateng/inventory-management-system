@@ -39,6 +39,11 @@
                <FontAwesomeIconView glyphName="LIST" size="20" />
             </graphic>
          </Button>
+         <Button fx:id="track_sales_btn" mnemonicParsing="false" text="TRACK SALES">
+            <graphic>
+               <FontAwesomeIconView glyphName="LIST" size="20" />
+            </graphic>
+         </Button>
          <Button fx:id="issued_goods_btn" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" prefWidth="180.0" text="ISSUED GOODS" textOverrun="CLIP">
             <graphic>
                <FontAwesomeIconView glyphName="LIST" size="20" text="" />

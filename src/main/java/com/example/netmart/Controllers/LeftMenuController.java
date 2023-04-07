@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 public class LeftMenuController implements Initializable {
     public Button dashboard_btn;
     public Button view_vendor_btn;
-    public Button add_goods_btn;
+    public Button track_sales_btn;
     public Button view_goods_btn;
     public Button view_bills_btn;
     public Button issued_goods_btn;
@@ -26,7 +26,7 @@ public class LeftMenuController implements Initializable {
     private void addListeners(){
         dashboard_btn.setOnAction(event -> onDashboard());
         view_vendor_btn.setOnAction(event -> onViewVendors());
-//        add_goods_btn.setOnAction(event -> onAddGoods());
+        track_sales_btn.setOnAction(event -> onTrackSales());
         view_goods_btn.setOnAction(event -> onViewGoods());
         view_bills_btn.setOnAction(event -> onViewBills());
         issued_goods_btn.setOnAction(event -> onIssuedGoods());
@@ -40,9 +40,7 @@ public class LeftMenuController implements Initializable {
     private void onViewVendors(){
         Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewVendors");
     }
-    private void onAddGoods(){
-        Model.getInstance().getViewFactory().getSelectedMenuItem().set("addGoods");
-    }
+    private void onTrackSales(){ Model.getInstance().getViewFactory().getSelectedMenuItem().set("trackSales");}
     private void onViewGoods(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewGoods");}
     private void onViewBills(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("viewBills");}
     private void onIssuedGoods(){Model.getInstance().getViewFactory().getSelectedMenuItem().set("issuedGoods");}

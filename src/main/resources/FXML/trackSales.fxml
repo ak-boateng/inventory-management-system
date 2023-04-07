@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="850.0" styleClass="main-container" stylesheets="@../Styles/TrackSales.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.netmart.Controllers.TrackSalesController">
+    <Label layoutX="50.0" layoutY="38.0" styleClass="view-title" text="TRACK SALES" />
+    <Line endX="642.0" layoutX="151.0" layoutY="68.0" startX="-100.0" />
+    <HBox layoutX="50.0" layoutY="140.0" prefHeight="43.0" prefWidth="743.0">
+        <children>
+            <Button fx:id="view_sales_btn" mnemonicParsing="false" prefHeight="43.0" prefWidth="152.0" text="View Product Sales" />
+        </children>
+    </HBox>
+    <Button fx:id="add_sales_btn" layoutX="51.0" layoutY="250.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="152.0" text="Add Product Sales">
+        <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
+        </graphic>
+    </Button>
+</AnchorPane>

@@ -4,6 +4,7 @@ import com.example.netmart.Controllers.ChangeViewController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -17,8 +18,8 @@ public class ViewFactory {
     // VIEW VENDORS VIEW
     private AnchorPane viewVendorsView;
     // ADD GOODS
-    private AnchorPane addGoodsView;
-    // VIEW GOODS
+    private AnchorPane trackSalesView;
+    // TRACK SALES
     private AnchorPane viewGoodsView;
     // VIEW BILLS
     private AnchorPane viewBillsView;
@@ -83,6 +84,19 @@ public class ViewFactory {
         }
         return viewGoodsView;
     }
+
+    // TRACKING THE SALES
+    public AnchorPane getTrackSalesView() {
+        if(trackSalesView == null){ // PREVENTS LOADING DASHBOARD MORE THAN ONCE
+            try{
+                trackSalesView = new FXMLLoader(getClass().getResource("/FXML/trackSales.fxml")).load();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return trackSalesView;
+    }
+
 
     // GETTING VIEW BILLS VIEW
     public AnchorPane getViewBillsView() {
@@ -153,4 +167,6 @@ public class ViewFactory {
     public void closeStage(Stage stage){
         stage.close();
     }
+
+
 }
