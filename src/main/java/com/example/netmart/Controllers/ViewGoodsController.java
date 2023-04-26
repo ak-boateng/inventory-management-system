@@ -21,6 +21,8 @@ public class ViewGoodsController {
     public ChoiceBox<String> category;
     public Button remove_btn;
     public Button add_good_btn;
+    public Button issue_btn;
+    public Label logic;
 
 
     @FXML
@@ -51,10 +53,10 @@ public class ViewGoodsController {
             "Frozen", "Meat", "Produce", "Cleaner", "Paper", "Personal"};
 
     String selectedCategory = "All";
-    private static ObservableList<Goods> allGoods = FXCollections.observableArrayList();
     public static Goods selectedItem = Goods.nullItem();
     public static ObservableList<Goods> listGoods = FXCollections.observableArrayList();
-
+    protected static  Goods toAdd = Goods.nullItem();
+    protected static IssuedGoods toIssue = IssuedGoods.nullItem();
 
 
     // STACKS INSTANCE
@@ -71,7 +73,7 @@ public class ViewGoodsController {
 
 
     // QUEUE INSTANCE
-    public static QueueDB dry = new QueueDB(10, "dry");
+    public static QueueDB dry = new QueueDB(3, "dry");
     public static ObservableList<Goods> dryItems;
 
     public static QueueDB frozen = new QueueDB(10, "frozen");
@@ -99,7 +101,7 @@ public class ViewGoodsController {
 
         Integer lastId = null;
         int size = 0;
-        good_id.setCellValueFactory(new PropertyValueFactory<>("good_id"));
+//        good_id.setCellValueFactory(new PropertyValueFactory<>("good_id"));
         good_name.setCellValueFactory(new PropertyValueFactory<>("good_name"));
         good_qty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         good_buying_price.setCellValueFactory(new PropertyValueFactory<>("buying_price"));
@@ -110,18 +112,20 @@ public class ViewGoodsController {
         listGoods = getCategoryData("beverages");
         view_goods_table.setItems(listGoods);
 
+//        System.out.println("BakeryItems: " + bakeryItems);
 
         // set the default category and add a listener
         category.setValue("All");
         category.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                listGoods = getCategoryData(newValue.toLowerCase());
-                view_goods_table.setItems(listGoods);
+//                listGoods = getCategoryData(newValue.toLowerCase());
+//                view_goods_table.setItems(listGoods);
+               handleCategoryChange(newValue);
             }
         });
 
         // Show all goods in the table
-        view_goods_table.setItems(allGoods);
+        view_goods_table.setItems(listGoods);
 
         // listen to TableView's selection changes
         view_goods_table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -136,7 +140,8 @@ public class ViewGoodsController {
         // ADD GOOD BTN
         add_good_btn.setOnAction(event -> addGood());
 
-
+        // ADD VENDOR POP UP
+        issue_btn.setOnAction(event -> vendorOptionModal());
         // REMOVE ITEMS
         remove_btn.setOnAction(event -> {
             String cat = category.getValue();
@@ -175,35 +180,43 @@ public class ViewGoodsController {
                     if (_toRemove < 0) {
                         produce.remove();
                         produceItems.remove(0);
+                        updateIndexes(produceItems);
                     } else {
                         produce.remove(_toRemove);
                         produceItems.remove(0);
+                        updateIndexes(produceItems);
                     }
                 case "cleaner":
                     if (_toRemove < 0) {
                         cleaner.remove();
                         cleanerItems.remove(0);
+                        updateIndexes(cleanerItems);
                     } else {
                         cleaner.remove(_toRemove);
                         cleanerItems.remove(0);
+                        updateIndexes(cleanerItems);
                     }
                     break;
                 case "paper":
                     if (_toRemove < 0) {
                         paper.remove();
                         paperItems.remove(0);
+                        updateIndexes(paperItems);
                     } else {
                         paper.remove(_toRemove);
                         paperItems.remove(0);
+                        updateIndexes(paperItems);
                     }
                     break;
                 case "personal":
                     if (_toRemove < 0) {
                         personal.remove();
                         personalItems.remove(0);
+                        updateIndexes(personalItems);
                     } else {
                         personal.remove(_toRemove);
                         personalItems.remove(0);
+                        updateIndexes(personalItems);
                     }
                     break;
                 default:
@@ -220,56 +233,78 @@ public class ViewGoodsController {
             case "beverages":
                 if(beverageItems == null){
                     beverageItems = getData(category);
+                    listGoods.addAll(beverageItems);
                 }
                 return beverageItems;
             case "bakery":
                 if(bakeryItems == null){
                     bakeryItems = getData(category);
+                    listGoods.addAll(bakeryItems);
+//                    System.out.println("In Bake " + bakeryItems);
+
                 }
                 return bakeryItems;
             case "dry":
                 if(dryItems == null){
                     dryItems = getData(category);
+                    listGoods.addAll(dryItems);
+
                 }
                 return dryItems;
             case "frozen":
                 if(frozenItems == null){
                     frozenItems = getData(category);
+                    listGoods.addAll(frozenItems);
+
                 }
                 return frozenItems;
             case "meat":
                 if(meatItems == null){
                     meatItems = getData(category);
+                    listGoods.addAll(meatItems);
+
                 }
                 return meatItems;
             case "produce":
                 if(produceItems == null) {
                     produceItems = getData(category);
-                return produceItems;
+                    listGoods.addAll(produceItems);
+
+                    return produceItems;
                 }
             case "canned":
                 if(cannedItems == null){
                     cannedItems = getData(category);
+                    listGoods.addAll(cannedItems);
+
                 }
                 return cannedItems;
             case "dairy":
                 if(dairyItems == null){
                     dairyItems = getData(category);
+                    listGoods.addAll(dairyItems);
+
                 }
                 return dairyItems;
             case "cleaner":
                 if(cleanerItems == null){
                     cleanerItems = getData(category);
+                    listGoods.addAll(cleanerItems);
+
                 }
                 return cleanerItems;
             case "paper":
                 if(paperItems == null){
                     paperItems = getData(category);
+                    listGoods.addAll(paperItems);
+
                 }
                 return paperItems;
             case "personal":
                 if(personalItems == null){
                     personalItems = getData(category);
+                    listGoods.addAll(personalItems);
+
                 }
                 return personalItems;
             default:
@@ -292,8 +327,24 @@ public class ViewGoodsController {
         }
     }
 
+    private void vendorOptionModal(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/issuedGoodModal.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Choose Vendor");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
 
     public ObservableList<Goods> getData(String category) {
+//        System.out.println("Fetching for: " + category);
         ObservableList<Goods> goods = FXCollections.observableArrayList();
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -304,7 +355,8 @@ public class ViewGoodsController {
 
             while (rs.next()) {
                 if (rs.getString("good_name") != null) {
-                    goods.add(new Goods(rs.getInt("id"),
+                    goods.add(new Goods(
+                            rs.getInt("id"),
                             rs.getString("good_name"),
                             rs.getInt("quantity"),
                             rs.getDouble("buying_price"),
@@ -317,7 +369,97 @@ public class ViewGoodsController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+//        System.out.println("Goods: " + goods);
         return goods;
+    }
+
+
+
+    private void handleCategoryChange(String cat) {
+        selectedCategory = cat;
+        view_goods_table.setItems(getCategoryData(cat.toLowerCase().split("/")[0].split(" ")[0]));
+    }
+
+    private void updateIndexes(ObservableList<Goods> goods) {
+        for (int i = 0; i < goods.size(); i++) {
+            goods.get(i).setGood_id(i);
+        }
+    }
+
+    public void sell() {
+        sell(selectedItem);
+    }
+
+    public static void sell(Goods selectedItem) {
+        if (selectedItem == null) {
+//            selectedItem = searchForItem(toIssue.getName());
+        }
+        Goods updatedItem = selectedItem;
+//        updatedItem.setSold((selectedItem.getSold() + toIssue.getQuantity()));
+        updatedItem.setQuantity((selectedItem.getQuantity() - toIssue.getQuantity()));
+        String table = selectedItem.getGood_name().toLowerCase().split("/")[0].split(" ")[0];
+        switch (table) {
+            case "beverages" -> {
+                beverageItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "beverages";
+            }
+            case "bakery" -> {
+                bakeryItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "bakery";
+            }
+            case "canned" -> {
+                cannedItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "canned";
+            }
+            case "dairy" -> {
+                dairyItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "dairy";
+            }
+            case "dry" -> {
+                dryItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "dry";
+            }
+            case "frozen" -> {
+                frozenItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "frozen";
+            }
+            case "meat" -> {
+                meatItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "meat";
+            }
+            case "produce" -> {
+                produceItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "produce";
+            }
+            case "cleaners" -> {
+                cleanerItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "cleaners";
+            }
+            case "paper" -> {
+                paperItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "paper";
+            }
+            case "personal" -> {
+                personalItems.set(selectedItem.getGood_id(), updatedItem);
+                table = "personal";
+            }
+            default -> {
+            }
+        }
+        for (int i = 0; i < listGoods.size(); i++) {
+            if (listGoods.get(i) == selectedItem) {
+                listGoods.set(i, updatedItem);
+                break;
+            }
+        }
+
+        ViewIssuedGoodsController.issuedGoodsList.add(0, toIssue);
+        ViewIssuedGoodsController.issuedGoods.add(0, toIssue);
+
+//        DBConnection dbConnection = DBConnection.getInstance();
+//        Connection connection = DatabaseConnection.getConnection();
+//        connection.execSQL("UPDATE " + table + " SET sold = " + (selectedItem.getSold() + toIssue.getQuantity()) + ", quantity = "
+//                        + (selectedItem.getQuantity() - toIssue.getQuantity()) + " WHERE id = " + selectedItem.getGood_id());
     }
 
 

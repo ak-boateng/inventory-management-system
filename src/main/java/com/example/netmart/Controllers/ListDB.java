@@ -1,10 +1,10 @@
 package com.example.netmart.Controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ListDB<T> {
     private  int size;
@@ -33,6 +33,17 @@ public class ListDB<T> {
                         "buying_price DECIMAL(10, 2), " +
                         "selling_price DECIMAL(10, 2), " +
                         "gross_price DECIMAL(10, 2), " +
+                        "date VARCHAR(255)" +
+                        ")";
+            } else if(clazz.equals(IssuedGoods.class)){
+                createTableQuery = "CREATE TABLE IF NOT EXISTS " + cat + " (" +
+                        "id INT UNIQUE, " +
+                        "good_name VARCHAR(255), " +
+                        "quantity INT, " +
+                        "buying_price DECIMAL(10, 2), " +
+                        "selling_price DECIMAL(10, 2), " +
+                        "gross_price DECIMAL(10, 2), " +
+                        "issued_to VARCHAR(255)," +
                         "date VARCHAR(255)" +
                         ")";
             }
@@ -206,6 +217,15 @@ public class ListDB<T> {
                                 resultSet.getInt("gross_price"),
                                 resultSet.getString("date"));
 
+                    } else if(clazz.equals(IssuedGoods.class)){
+                        item = (T) new IssuedGoods(
+                                resultSet.getInt("id"),
+                                resultSet.getString("name"),
+                                resultSet.getString("issued_to"),
+                                resultSet.getDate("issued_date"),
+                                resultSet.getInt("quantity"),
+                                resultSet.getDouble("unit_cost"),
+                                resultSet.getString("category"));
                     }
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -218,6 +238,47 @@ public class ListDB<T> {
         return item;
     }
 
+    public ObservableList<T> getItems(){
+        ObservableList<T> goods = FXCollections.observableArrayList();
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + cat);
+
+            if (clazz.equals(Goods.class)) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("good_name");
+                    int quantity = resultSet.getInt("quantity");
+                    double selling_price = resultSet.getDouble("selling_price");
+                    double buying_price = resultSet.getDouble("buying_price");
+                    double gross_price = resultSet.getInt("gross_price");
+                    String date = resultSet.getString("date");
+                    if (name != null) {
+                        Goods item = new Goods(id, name,  quantity, selling_price, buying_price, gross_price, date);
+                        goods.add((T) item);
+                    }
+                }
+            } else if (clazz.equals(IssuedGoods.class)) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String name = resultSet.getString("name");
+                    String issued_to = resultSet.getString("issued_to");
+                    int quantity = resultSet.getInt("quantity");
+                    double unit_cost = resultSet.getDouble("unit_cost");
+                    Date issued_date = resultSet.getDate("issued_date");
+                    String category = resultSet.getString("category");
+                    if (name != null) {
+                        IssuedGoods item = new IssuedGoods(id, name, issued_to, issued_date, quantity, unit_cost, category);
+                        goods.add((T) item);
+                    }
+                }
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return goods;
+    }
     public Class<T> getGenericType() {
         return clazz;
     }

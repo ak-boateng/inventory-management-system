@@ -28,6 +28,6 @@
    <Label layoutX="35.0" layoutY="241.0" text="Buying Price" />
    <TextField fx:id="item_1_selling_price" layoutX="35.0" layoutY="333.0" prefHeight="35.0" prefWidth="546.0" />
    <Label layoutX="35.0" layoutY="309.0" text="Selling Price" />
-   <TextField fx:id="item_1_gross_price" layoutX="35.0" layoutY="398.0" prefHeight="35.0" prefWidth="546.0" />
+   <TextField fx:id="item_1_gross_price" editable="false" layoutX="35.0" layoutY="398.0" prefHeight="35.0" prefWidth="546.0" />
    <Label layoutX="35.0" layoutY="374.0" text="Gross Price" />
 </AnchorPane>

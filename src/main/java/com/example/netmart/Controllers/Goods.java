@@ -10,7 +10,7 @@ public class Goods {
     private String date;
 
     public Goods(int good_id, String good_name, int quantity, double buying_price, double selling_price, double gross_price, String date) {
-//        this.good_id = good_id;
+        this.good_id = good_id;
         this.good_name = good_name;
         this.quantity = quantity;
         this.buying_price = buying_price;
@@ -74,6 +74,15 @@ public class Goods {
 
     public void setDate_price(String date) {
         this.date = date;
+    }
+
+
+    @Override
+    public String toString() {
+        return "id = " + good_id + ", good_name = " + good_name + ", quantity = " + quantity + ", buying_price = " + buying_price + ", selling_price = "
+                + selling_price
+                + ", gross_price = " + gross_price + ", date = "
+                + date;
     }
 
     public String sqlStr() {

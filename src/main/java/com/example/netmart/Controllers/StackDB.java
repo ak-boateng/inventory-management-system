@@ -52,7 +52,7 @@ public class StackDB {
             // If the stack is empty, fill it with null data
             if (size == 0) {
                 System.out.println("initializing " + cat + " with default EMPTY values...");
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 3; i++) {
                     String insertQuery = String.format("INSERT INTO %s (id, good_name, quantity, buying_price, selling_price, gross_price, date)" +
                             " VALUES(%s, NULL, NULL, NULL, NULL, NULL, NULL)", cat, i);
                     Statement insertStatement = connection.createStatement();
